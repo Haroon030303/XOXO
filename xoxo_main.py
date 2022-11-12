@@ -40,14 +40,28 @@ def play_game():
          
  # the game has ended
     if winner=="X" or winner=="O":
-        print(winner+" won .")
+        print(winner+" won.")
     elif winner == None:
         print("TIE.")
 
 # position of a player and input of position 
 def handle_turn(player):
+
+    print(player+"'s Turn.")
     position=input("Choose a position from 1-9: ")
-    position=int(position) -1
+
+    valid=False
+    while not valid:
+
+        while position not in["1","2","3","4","5","6","7","8","9"] :
+            position = input("Invalid input Choose a position from 1-9: ")
+
+        position=int(position) -1
+
+        if board[position]=="-":
+            valid=True
+        else:    
+            print("you cant go there. Go again.")
 
     board[position]=player
 
@@ -140,10 +154,22 @@ def check_diadonals():
         return board[6]   
     return
 
+
 def check_if_tie():
+    global game_still_going
+    if "-" not in board:
+        game_still_going=False
     return
 
 
 def flip_player():
+    # calling global variable current player to flip players 
+    global current_player
+    # if current player is X change it to O
+    if current_player =="X":
+        current_player="O"
+    # if current player is O change it to X    
+    elif current_player =="O":
+        current_player="X"    
     return #flipping player to know whose turn it is   
 play_game()
