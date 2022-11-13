@@ -1,5 +1,5 @@
 # Global variables
-
+import random
 # game board
 board=["-","-","-",
        "-","-","-",
@@ -69,13 +69,49 @@ def handle_turn(player):
             else:    
                 print("you can't go there. Try again.")
 
-        board[position]=player
+        # board[position]=player
     else:
         # robot is playing 
         print(" robots turn ")
+        # robot is playing 
+        # have to work on bots logic 
+        # check if grid empty for first move and generate randon b/w 1-9
+        # for next steps check defending position , scoring position then play 
+        # is_empty_board()
+        if is_empty_board():
+          position=random.randint(1,9)
+        else:
+            valid=False
+            while not valid:
+                position=random.randint(1,9)
+                if board[position]=="-":
+                    valid=True
+                else:    
+                 print("you can't go there. Try again.")
+            # check_available_positions()
+            # check_blocking_positions()
+            # check_scoring_positions()
+        # bots turn is second player now pick random position and check is its empty     
+        # bot_turn() then board position at the end 
+    board[position]=player
+        
     display_board()
 
-    
+
+def is_empty_board():
+    global board
+    # board_empty=False
+    # while not board_empty:
+    check_board=False 
+    if board[0]==board[1]==board[2]==board[3]==board[4]==board[5]==board[6]==board[7]==board[8]:
+        check_board=True  
+        return check_board     
+            # position=random.randint(1,9)
+            # board[position]=player
+            # board_empty=True
+            # return position       
+
+
 def check_if_game_over():
     check_for_win()
     check_if_tie()
@@ -199,7 +235,8 @@ while not selected_player:
         human_player=input("Choose player 1[X] or Player 2[O] as human player: ")
         if human_player=="X" or human_player=="O":
             selected_player=True
-        # else:
+    else:
+        selected_player=True
         #     selected_player=False
             #human_player=current_player
 
