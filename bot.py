@@ -13,7 +13,7 @@ winner=None
 
 # default value of global variable current_player set to X  
 current_player="X"
-
+turn_count=1
 # display of the board
 def display_board():
     print(board[0]+" | "+ board[1]+" | "+ board[2])
@@ -73,27 +73,92 @@ def handle_turn(player):
     else:
         # robot is playing 
         print(" robot's turn ")
-        # robot is playing 
-        # have to work on bots logic 
-        # check if grid empty for first move and generate randon b/w 1-9
-        # for next steps check defending position , scoring position then play 
-        # is_empty_board()
-        if is_empty_board():
-          position=random.randint(1,9)
-        else:
-            valid=False
-            while not valid:
-                position=random.randint(1,9)
-                position=position-1
-                if board[position]=="-":
-                    valid=True
-            # check_available_positions()
-            # check_blocking_positions()
-            # check_scoring_positions()
-        # bots turn is second player now pick random position and check is its empty     
-        # bot_turn() then board position at the end 
+        position=find_scoring_positions()
+
     board[position]=player
     display_board()
+
+def find_scoring_positions():
+    global turn_count
+    global human_player
+    global board
+    # position=0
+    if ((turn_count==1 or turn_count==2 ) and human_player=="O") or (turn_count==1 and human_player=="X"):
+        valid=False
+        while not valid:
+            position=random.randint(1,9)
+            position=int(position)-1
+            if board[position]=="-":
+                valid=True
+    else:
+        position=find_winning_position()
+        # having center cell as position will increase the chances of winning  
+        position=4
+        if not board[position]=="-":
+            # is_human_player_winning()
+            # check row 1
+            if board[0]==board[1]==human_player:
+                position=2
+            elif board[1]==board[2]==human_player:
+                position=0
+            elif board[0]==board[2]==human_player:
+                position=1
+            # checkrow2
+            elif board[3]==board[4]==human_player:
+                position=5
+            elif board[4]==board[5]==human_player:
+                position=3
+            elif board[3]==board[5]==human_player:
+                position=4
+            # row 3
+            elif board[6]==board[7]==human_player:
+                position=8
+            elif board[7]==board[8]==human_player:
+                position=6
+            elif board[6]==board[8]==human_player:
+                position=7
+            # check column 1
+            elif board[0]==board[3]==human_player:
+                position=6
+            elif board[0]==board[6]==human_player:
+                position=3
+            elif board[3]==board[6]==human_player:
+                position=0
+            # check column 2 
+            elif board[1]==board[4]==human_player:
+                position=7
+            elif board[7]==board[4]==human_player:
+                position=1
+            elif board[1]==board[7]==human_player:
+                position=4
+            # check column 3 
+            elif board[2]==board[5]==human_player:
+                position=8
+            elif board[8]==board[5]==human_player:
+                position=2
+            elif board[2]==board[8]==human_player:
+                position=5
+            # check for diagonal 1
+            elif board[0]==board[4]==human_player:
+                position=8
+            elif board[8]==board[4]==human_player:
+                position=0
+            elif board[0]==board[8]==human_player:
+                position=4
+            # check for diagonal 1
+            elif board[6]==board[4]==human_player:
+                position=2
+            elif board[2]==board[4]==human_player:
+                position=6
+            elif board[2]==board[6]==human_player:
+                position=4
+    turn_count+=1
+    return position
+
+
+def find_winning_position():
+    print("Finding winning position")  
+    
 
 def is_empty_board():
     global board
