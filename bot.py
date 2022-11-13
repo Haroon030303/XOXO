@@ -72,7 +72,7 @@ def handle_turn(player):
         # board[position]=player
     else:
         # robot is playing 
-        print(" robots turn ")
+        print(" robot's turn ")
         # robot is playing 
         # have to work on bots logic 
         # check if grid empty for first move and generate randon b/w 1-9
@@ -84,19 +84,16 @@ def handle_turn(player):
             valid=False
             while not valid:
                 position=random.randint(1,9)
+                position=position-1
                 if board[position]=="-":
                     valid=True
-                else:    
-                 print("you can't go there. Try again.")
             # check_available_positions()
             # check_blocking_positions()
             # check_scoring_positions()
         # bots turn is second player now pick random position and check is its empty     
         # bot_turn() then board position at the end 
     board[position]=player
-        
     display_board()
-
 
 def is_empty_board():
     global board
